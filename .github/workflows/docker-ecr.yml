@@ -14,12 +14,6 @@ jobs:
 
       - name: Build the Docker image
         run: docker build -t hello-node:latest .
-
-      - name: Login to Docker Hub
-        run: docker login -u 'picckr' -p 'Lagos2023@'
-
-      - name: Push to Docker Hub
-        run: docker push picckr/apis:latest
         
       - name: Checkout repository
         uses: actions/checkout@v2
