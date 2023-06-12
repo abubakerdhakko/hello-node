@@ -11,9 +11,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-
-      - name: Build the Docker image
-        run: docker build -t hello-node:latest .
         
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -31,4 +28,6 @@ jobs:
           aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/b4c0f8w9
       - name: Build and push Docker image
         run: |
+          docker build -t hello-node .
+          docker tag hello-node
           docker push public.ecr.aws/b4c0f8w9/hello-node:latest
