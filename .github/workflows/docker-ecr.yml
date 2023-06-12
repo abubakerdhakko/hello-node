@@ -1,0 +1,33 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Build the Docker image
+        run: docker build -t picckr/apis:latest .
+
+      - name: Login to Docker Hub
+        run: docker login -u 'picckr' -p 'Lagos2023@'
+
+      - name: Push to Docker Hub
+        run: docker push picckr/apis:latest
+        
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Login to AWS ECR
+        run: |
+          aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/b4c0f8w9
+      - name: Build and push Docker image
+        run: |
+          docker build -t hello-node .
+          docker push public.ecr.aws/b4c0f8w9/hello-node:latest
