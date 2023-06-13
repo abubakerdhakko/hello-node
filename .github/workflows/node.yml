@@ -34,5 +34,5 @@ jobs:
 
       - name: Execute script on remote EC2
         run: |
-          ssh -i ~/.ssh/id_rsa ubuntu@16.170.37.57 'bash -s' < /home/ubuntu/unzip-file.sh
+          ssh -i ~/.ssh/id_rsa root@16.170.37.57 'bash -s' < /unzip-file.sh
       
