@@ -24,15 +24,5 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: repo.zip
           target: /home/ubuntu/hello-node
-            
-      - name: Set up SSH key
-        run: |
-          mkdir -p ~/.ssh/
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" | tr -d '\r' > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H 16.170.37.57 >> ~/.ssh/authorized_keys
 
-      - name: Execute script on remote EC2
-        run: |
-          ssh -i ~/.ssh/id_rsa root@16.170.37.57 'bash -s' < unzip-file.sh
       
