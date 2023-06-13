@@ -24,7 +24,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: repo.zip
           target: /home/ubuntu/hello-node
-      - name: Execute .sh file
+      - name: Execute unzip.sh file
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.EC2_PUBLIC_IP }}
@@ -34,3 +34,12 @@ jobs:
             chmod +x /home/ubuntu/unzip-file.sh
             /home/ubuntu/unzip-file.sh
 
+      - name: Execute docker-run.sh file
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_PUBLIC_IP }}
+          username: ubuntu
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            chmod +x /home/ubuntu/docker-run.sh
+            /home/ubuntu/docker-run.sh
