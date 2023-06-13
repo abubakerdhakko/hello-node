@@ -13,6 +13,25 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Stop running container
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_PUBLIC_IP }}
+          username: ubuntu
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            docker stop <container_name>
+            docker rm <container_name>
+
+      - name: Remove files from hello-node/src folder
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_PUBLIC_IP }}
+          username: ubuntu
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            rm -rf /home/ubuntu/hello-node/src/*
+
       - name: Compress repository folder
         run: zip -r repo.zip src
 
@@ -24,6 +43,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: repo.zip
           target: /home/ubuntu/hello-node
+
       - name: Execute unzip.sh file
         uses: appleboy/ssh-action@master
         with:
@@ -43,3 +63,12 @@ jobs:
           script: |
             chmod +x /home/ubuntu/docker-run.sh
             /home/ubuntu/docker-run.sh
+
+      - name: Remove previous zip file
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_PUBLIC_IP }}
+          username: ubuntu
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            rm -f /home/ubuntu/hello-node/repo.zip
