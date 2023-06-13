@@ -24,3 +24,9 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: repo.zip
           target: /home/ubuntu/hello-node
+          run: |
+            chmod +x docker-run.sh
+            ./docker-run.sh
+            chmod +x docker-build.sh
+            ./docker-build.sh
+
