@@ -1,0 +1,26 @@
+name: Copy Repository to EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Compress repository folder
+        run: zip -r repo.zip hello-node
+
+      - name: Copy zip file to EC2
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.EC2_PUBLIC_IP }}
+          username: ubuntu
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: repo.zip
+          target: /home/ubuntu/hello-node
