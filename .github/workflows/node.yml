@@ -20,8 +20,8 @@ jobs:
           username: ubuntu
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            docker stop  my-node-app
-            docker rm  my-node-app
+            docker stop  ecstatic_ramanujan
+            docker rm  ecstatic_ramanujan
 
       - name: Remove files from hello-node/src folder
         uses: appleboy/ssh-action@master
