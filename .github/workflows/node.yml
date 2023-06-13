@@ -31,6 +31,6 @@ jobs:
           username: ubuntu
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            chmod +x /home/ubuntu/hello-node/unzip-file.sh
-            /home/ubuntu/hello-node/unzip-file.sh
+            chmod +x /home/ubuntu/unzip-file.sh
+            /home/ubuntu/unzip-file.sh
 
